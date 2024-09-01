@@ -58,7 +58,6 @@
                     android:id="@+id/icon_notas"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:src="@tools:sample/avatars"
                     app:srcCompat="@drawable/icon_paste" />
 
                 <TextView
@@ -83,7 +82,6 @@
                     android:id="@+id/icon_gradeCurso"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:src="@tools:sample/avatars"
                     app:srcCompat="@drawable/baseline_account_balance_24" />
 
                 <TextView
@@ -116,7 +114,6 @@
                     android:id="@+id/icon_horarioAulas"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:src="@tools:sample/avatars"
                     app:srcCompat="@drawable/baseline_access_time_24" />
 
                 <TextView
@@ -141,7 +138,6 @@
                     android:id="@+id/icon_horarioProvas"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:src="@tools:sample/avatars"
                     app:srcCompat="@drawable/baseline_calendar_month_24" />
 
                 <TextView
