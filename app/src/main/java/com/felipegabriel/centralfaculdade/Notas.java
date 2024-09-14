@@ -11,14 +11,17 @@ import com.felipegabriel.centralfaculdade.domain.Sessao;
 import com.felipegabriel.centralfaculdade.domain.Usuario;
 import com.felipegabriel.centralfaculdade.repository.AlunoRepository;
 import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
+import com.felipegabriel.centralfaculdade.service.AlunoService;
 
 public class Notas extends AppCompatActivity {
-    private AlunoRepository alunoRepository;
+    private AlunoService alunoService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notas);
         setSupportActionBar(findViewById(R.id.toolbar_notas));
+
+        alunoService = new AlunoService(this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -37,8 +40,8 @@ public class Notas extends AppCompatActivity {
     }
 
     private Aluno getAluno() {
-        alunoRepository = new AlunoRepository(this, Aluno.class);
-        Aluno aluno = alunoRepository.findByIdUser(Sessao.getId());
+
+        Aluno aluno = alunoService.buscaAluno(Sessao.getId());
 
         if (aluno == null) {
             throw new RuntimeException("Aluno nao encontrado");

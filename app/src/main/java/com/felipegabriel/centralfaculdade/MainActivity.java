@@ -22,7 +22,10 @@ import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTermo
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTurma;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DocenteDisciplinaTermo;
 import com.felipegabriel.centralfaculdade.repository.AlunoRepository;
+import com.felipegabriel.centralfaculdade.repository.CursoRepository;
 import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
+import com.felipegabriel.centralfaculdade.service.AlunoService;
+import com.felipegabriel.centralfaculdade.service.CursoService;
 
 import java.time.LocalDate;
 
@@ -31,14 +34,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MainActivity extends AppCompatActivity {
     private GenericDatabase<Usuario> tableUsuario;
-    private GenericDatabase<Curso> tableCurso;
-    private GenericDatabase<Aluno> tableAluno;
-    private AlunoRepository alunoRepository;
+    private AlunoService alunoService;
+    private CursoService cursoService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        alunoRepository = new AlunoRepository(this, Aluno.class);
+        alunoService = new AlunoService(this);
+        cursoService = new CursoService(this);
 
         init();
     }
@@ -49,17 +52,20 @@ public class MainActivity extends AppCompatActivity {
         criaUsuario();
 
         criaAluno();
+
+        criaCurso();
+    }
+
+    private void criaCurso() {
+        Curso curso = cursoService.buscaCurso("Empreendedorismo");
+        if (curso == null) {
+            cursoService.criaCurso("Empreendedorismo");
+        }
     }
 
     private void criaAluno() {
-        if (alunoRepository.findByIdUser(Sessao.getId()) == null) {
-            Aluno aluno = new Aluno();
-
-            aluno.setNome("Usuario");
-            aluno.setDataCadastro(LocalDate.now());
-            aluno.setIdUsuario(Sessao.getId());
-
-            tableAluno.save(aluno);
+        if (alunoService.buscaAluno(Sessao.getId()) == null) {
+            alunoService.criaAluno(Sessao.getId(), "Usuario");
         }
     }
 
@@ -88,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
         GenericDatabase<DocenteDisciplinaTermo> tableDocenteDisciplinaTermo;
         GenericDatabase<DisciplinaTurma> tableDisciplinaTurma;
         try {
-            tableAluno = new GenericDatabase<>(this, Aluno.class);
+            GenericDatabase<Aluno> tableAluno = new GenericDatabase<>(this, Aluno.class);
             tableAluno.getWritableDatabase();
 
-            tableCurso = new GenericDatabase<>(this, Curso.class);
+            GenericDatabase<Curso> tableCurso = new GenericDatabase<>(this, Curso.class);
             tableCurso.getWritableDatabase();
 
             tableDisciplina = new GenericDatabase<>(this, Disciplina.class);
