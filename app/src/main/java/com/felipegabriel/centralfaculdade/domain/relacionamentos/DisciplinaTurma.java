@@ -1,4 +1,4 @@
-package com.felipegabriel.centralfaculdade.domain;
+package com.felipegabriel.centralfaculdade.domain.relacionamentos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Materia {
+public class DisciplinaTurma {
     private int id;
-    private String nome;
+    private int idMateria;
+    private int idTermo;
+    private int ativo;
 }

@@ -1,0 +1,183 @@
+package com.felipegabriel.centralfaculdade.repository;
+
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import com.felipegabriel.centralfaculdade.domain.Usuario;
+
+import java.lang.reflect.Field;
+
+public class GenericDatabase<T> extends SQLiteOpenHelper {
+
+    private static final String DATABASE_NAME = "GeniusFit";
+    private static final int DATABASE_VERSION = 1;
+    private static final String COLUMN_USERNAME = "usuario";
+    private static final String COLUMN_PASSWORD = "senha";
+    private Class<T> clazz;
+
+    public GenericDatabase(Context context, Class<T> clazz) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.clazz = clazz;
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String tableName = clazz.getSimpleName();
+        db.execSQL("DROP TABLE IF EXISTS " + tableName);
+        onCreate(db);
+    }
+
+    private boolean isTableExists(SQLiteDatabase db, String tableName) {
+        Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name=?", new String[]{tableName});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
+    }
+
+    protected void createTableIfNotExists(SQLiteDatabase db) {
+        String tableName = clazz.getSimpleName();
+        if (!isTableExists(db, tableName)) {
+            String createTableQuery = createTableQuery(clazz);
+            db.execSQL(createTableQuery);
+        }
+    }
+
+    private String createTableQuery(Class<T> clazz) {
+        StringBuilder query = new StringBuilder();
+        String tableName = clazz.getSimpleName();
+        query.append("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (");
+
+        query.append("id INTEGER PRIMARY KEY AUTOINCREMENT, ");
+
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (!field.getName().equalsIgnoreCase("id")) {
+                String fieldName = field.getName();
+                String fieldType = getSQLiteType(field.getType());
+
+                query.append(fieldName).append(" ").append(fieldType).append(", ");
+            }
+        }
+
+        query.setLength(query.length() - 2);
+        query.append(");");
+        return query.toString();
+    }
+
+    public long save(T object) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        createTableIfNotExists(db);
+
+        ContentValues values = new ContentValues();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (!field.getName().equalsIgnoreCase("id")) {
+                field.setAccessible(true);
+                try {
+                    String fieldName = field.getName();
+                    Object fieldValue = field.get(object);
+
+                    if (fieldValue != null) {
+                        if (fieldValue instanceof String) {
+                            values.put(fieldName, (String) fieldValue);
+                        } else if (fieldValue instanceof Integer) {
+                            values.put(fieldName, (Integer) fieldValue);
+                        } else if (fieldValue instanceof Long) {
+                            values.put(fieldName, (Long) fieldValue);
+                        } else if (fieldValue instanceof Double) {
+                            values.put(fieldName, (Double) fieldValue);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException("Erro ao salvar: " + e.getMessage());
+                }
+            }
+        }
+
+        return db.insert(clazz.getSimpleName(), null, values);
+    }
+
+    public T findById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        createTableIfNotExists(db);
+
+        T object = null;
+        String tableName = clazz.getSimpleName();
+        String query = "SELECT * FROM " + tableName + " WHERE id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        object = getObject(cursor, object);
+
+        cursor.close();
+        return object;
+    }
+
+    public T checkUser(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        createTableIfNotExists(db);
+
+        String query = String.format("SELECT * FROM USUARIO WHERE %s = ? AND %s = ?", COLUMN_USERNAME, COLUMN_PASSWORD);
+        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+
+        T object = null;
+
+        object = getObject(cursor, object);
+
+        cursor.close();
+        return object;
+    }
+
+    protected T getObject(Cursor cursor, T object) {
+        if (cursor.moveToFirst()) {
+            try {
+                object = clazz.newInstance();
+
+                Field[] fields = clazz.getDeclaredFields();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    int columnIndex = cursor.getColumnIndex(field.getName());
+
+                    if (columnIndex != -1) {
+                        if (field.getType() == String.class) {
+                            field.set(object, cursor.getString(columnIndex));
+                        } else if (field.getType() == int.class || field.getType() == Integer.class) {
+                            field.set(object, cursor.getInt(columnIndex));
+                        } else if (field.getType() == long.class || field.getType() == Long.class) {
+                            field.set(object, cursor.getLong(columnIndex));
+                        } else if (field.getType() == double.class || field.getType() == Double.class) {
+                            field.set(object, cursor.getDouble(columnIndex));
+                        }
+                    }
+                }
+            } catch (IllegalAccessException | InstantiationException e) {
+                throw new RuntimeException("Erro ao buscar por id: " + e.getMessage());
+            }
+        }
+        return object;
+    }
+
+    private String getSQLiteType(Class<?> type) {
+        if (type == String.class) {
+            return "TEXT";
+        } else if (type == int.class || type == Integer.class) {
+            return "INTEGER";
+        } else if (type == long.class || type == Long.class) {
+            return "INTEGER";
+        } else if (type == float.class || type == Float.class || type == double.class || type == Double.class) {
+            return "REAL";
+        } else {
+            return "TEXT";
+        }
+    }
+}
+
+

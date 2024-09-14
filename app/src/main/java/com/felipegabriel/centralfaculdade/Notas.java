@@ -6,8 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class Notas extends AppCompatActivity {
+import com.felipegabriel.centralfaculdade.domain.Aluno;
+import com.felipegabriel.centralfaculdade.domain.Sessao;
+import com.felipegabriel.centralfaculdade.domain.Usuario;
+import com.felipegabriel.centralfaculdade.repository.AlunoRepository;
+import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
 
+public class Notas extends AppCompatActivity {
+    private AlunoRepository alunoRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +24,8 @@ public class Notas extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        Aluno aluno = getAluno();
     }
 
     @Override
@@ -26,5 +34,16 @@ public class Notas extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Aluno getAluno() {
+        alunoRepository = new AlunoRepository(this, Aluno.class);
+        Aluno aluno = alunoRepository.findByIdUser(Sessao.getId());
+
+        if (aluno == null) {
+            throw new RuntimeException("Aluno nao encontrado");
+        }
+
+        return aluno;
     }
 }

@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MateriaTurma {
+public class DocenteDisciplinaTermo {
+    private int id;
+    private int idProfessor;
     private int idMateria;
     private int idTermo;
     private int ativo;

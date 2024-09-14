@@ -35,6 +35,9 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.32")
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
+    implementation("org.slf4j:slf4j-api:1.7.25")
+    implementation("com.github.tony19:logback-android:2.0.0")
+
 
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")

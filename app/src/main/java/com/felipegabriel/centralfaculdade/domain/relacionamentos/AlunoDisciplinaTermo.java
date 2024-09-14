@@ -1,7 +1,4 @@
-package com.felipegabriel.centralfaculdade.domain;
-
-import java.time.LocalDate;
-import java.util.List;
+package com.felipegabriel.centralfaculdade.domain.relacionamentos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professor {
+public class AlunoDisciplinaTermo {
     private int id;
-    private String nome;
-    private LocalDate dataCadastro;
+    private int idAluno;
+    private int idMateria;
+    private int idTermo;
     private int ativo;
 }

@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Curso {
+@AllArgsConstructor
+public class Usuario {
     private int id;
-    private String descricao;
-    private int ativo = 1;
+    private String usuario;
+    private String senha;
 }

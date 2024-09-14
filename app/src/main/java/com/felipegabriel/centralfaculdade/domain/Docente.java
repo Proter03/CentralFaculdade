@@ -1,5 +1,7 @@
 package com.felipegabriel.centralfaculdade.domain;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Curso {
+public class Docente {
     private int id;
-    private String descricao;
-    private int ativo = 1;
+    private int idUsuario;
+    private String nome;
+    private LocalDate dataCadastro;
+    private int ativo;
 }

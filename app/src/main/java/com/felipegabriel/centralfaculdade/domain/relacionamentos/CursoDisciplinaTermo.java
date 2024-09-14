@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlunoMateriaTermo {
-    private int idAluno;
+public class CursoDisciplinaTermo {
+    private int id;
+    private int idCurso;
     private int idMateria;
     private int idTermo;
-    private int ativo;
+    private Float horas;
+    private String Emenda;
 }
