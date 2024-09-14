@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.felipegabriel.centralfaculdade.domain.Aluno;
@@ -15,33 +14,36 @@ import com.felipegabriel.centralfaculdade.domain.Sessao;
 import com.felipegabriel.centralfaculdade.domain.Termo;
 import com.felipegabriel.centralfaculdade.domain.Turma;
 import com.felipegabriel.centralfaculdade.domain.Usuario;
+import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaTermo;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.CursoDisciplina;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.CursoDisciplinaTermo;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTermoProva;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTurma;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DocenteDisciplinaTermo;
-import com.felipegabriel.centralfaculdade.repository.AlunoRepository;
-import com.felipegabriel.centralfaculdade.repository.CursoRepository;
 import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
+import com.felipegabriel.centralfaculdade.service.AlunoDisciplinaNotaService;
 import com.felipegabriel.centralfaculdade.service.AlunoService;
 import com.felipegabriel.centralfaculdade.service.CursoService;
-
-import java.time.LocalDate;
+import com.felipegabriel.centralfaculdade.service.DisciplinaService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MainActivity extends AppCompatActivity {
     private GenericDatabase<Usuario> tableUsuario;
+    private DisciplinaService disciplinaService;
     private AlunoService alunoService;
     private CursoService cursoService;
+    private AlunoDisciplinaNotaService alunoDisciplinaNotaService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         alunoService = new AlunoService(this);
         cursoService = new CursoService(this);
+        disciplinaService = new DisciplinaService(this);
+        alunoDisciplinaNotaService = new AlunoDisciplinaNotaService(this);
 
         init();
     }
@@ -54,12 +56,38 @@ public class MainActivity extends AppCompatActivity {
         criaAluno();
 
         criaCurso();
+
+        criaDisciplina();
+        
+        criaNotaNota();
+    }
+
+    private void criaNotaNota() {
+        Curso curso = cursoService.buscaCurso("Ciência da Computação");;
+        Aluno aluno = alunoService.buscaAluno(Sessao.getId());
+        Disciplina disciplina = disciplinaService.buscaDisciplina("Empreendedorismo");
+
+        if (curso == null || aluno == null || disciplina == null) {
+            throw new RuntimeException("Erro criar nota");
+        }
+
+        AlunoDisciplinaNota alunoDisciplinaNota = alunoDisciplinaNotaService.getIdAlunoAndIdDisciplina(aluno.getId(), disciplina.getId(), curso.getId());
+        if (alunoDisciplinaNota == null) {
+            alunoDisciplinaNotaService.criaAlunoDisciplinaNota(aluno.getId(), disciplina.getId(), curso.getId(), 8);
+        }
+    }
+
+    private void criaDisciplina() {
+        Disciplina disciplina = disciplinaService.buscaDisciplina("Empreendedorismo");
+        if (disciplina == null) {
+            disciplinaService.criaDisciplina("Empreendedorismo");
+        }
     }
 
     private void criaCurso() {
-        Curso curso = cursoService.buscaCurso("Empreendedorismo");
+        Curso curso = cursoService.buscaCurso("Ciência da Computação");
         if (curso == null) {
-            cursoService.criaCurso("Empreendedorismo");
+            cursoService.criaCurso("Ciência da Computação");
         }
     }
 
@@ -93,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         GenericDatabase<DisciplinaTermoProva> tableDisciplinaTermoProva;
         GenericDatabase<DocenteDisciplinaTermo> tableDocenteDisciplinaTermo;
         GenericDatabase<DisciplinaTurma> tableDisciplinaTurma;
+        GenericDatabase<AlunoDisciplinaNota> tableAlunoDisciplinaNota;
         try {
             GenericDatabase<Aluno> tableAluno = new GenericDatabase<>(this, Aluno.class);
             tableAluno.getWritableDatabase();
@@ -132,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
             tableUsuario = new GenericDatabase<>(this, Usuario.class);
             tableUsuario.getWritableDatabase();
+
+            tableAlunoDisciplinaNota = new GenericDatabase<>(this, AlunoDisciplinaNota.class);
+            tableAlunoDisciplinaNota.getWritableDatabase();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar tabelas: " + e.getMessage());
         }

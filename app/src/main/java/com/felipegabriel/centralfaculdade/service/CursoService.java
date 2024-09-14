@@ -13,16 +13,16 @@ public class CursoService {
     }
 
     public void criaCurso(String descricao) {
-        montaCruso(descricao);
+        montaCurso(descricao);
     }
 
-    private void montaCruso(String descricao) {
+    private void montaCurso(String descricao) {
         Curso curso = instanciaCurso(descricao);
 
-        setaIdCurso(curso, (int) montaCruso(curso));
+        setaIdCurso(curso, (int) montaCurso(curso));
     }
 
-    private long montaCruso(Curso curso) {
+    private long montaCurso(Curso curso) {
         return cursoRepository.save(curso);
     }
 
