@@ -55,11 +55,11 @@ public class Notas extends AppCompatActivity {
     }
 
     private Disciplina getDisciplina() {
-        return disciplinaService.buscaDisciplina("Empreendedorismo");
+        return disciplinaService.getDisciplinaByNome("Empreendedorismo");
     }
 
     private Curso getCurso() {
-        return cursoService.buscaCurso("Ciência da Computação");
+        return cursoService.getCursoByDescricao("Ciência da Computação");
     }
 
     private Aluno getAluno() {

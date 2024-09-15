@@ -16,6 +16,18 @@ public class DisciplinaService {
         montaDisciplina(descricao);
     }
 
+    public Disciplina getDisciplinaByNome(String nome) {
+        return findByNome(nome);
+    }
+
+    public Disciplina getDisciplinaById(int idDisciplina) {
+        return getById(idDisciplina);
+    }
+
+    private Disciplina getById(int idDisciplina) {
+        return disciplinaRepository.findById(idDisciplina).orElseThrow(() -> new RuntimeException("Nao foi encontrado nenhuma disciplina com esse id: " + idDisciplina));
+    }
+
     private void montaDisciplina(String nome) {
         Disciplina disciplina = instanciaDisciplina(nome);
 
@@ -35,10 +47,6 @@ public class DisciplinaService {
         disciplina.setNome(nome);
 
         return disciplina;
-    }
-
-    public Disciplina buscaDisciplina(String nome) {
-        return findByNome(nome);
     }
 
     private Disciplina findByNome(String nome) {

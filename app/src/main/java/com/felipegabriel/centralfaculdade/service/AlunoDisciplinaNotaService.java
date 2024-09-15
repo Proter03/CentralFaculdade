@@ -18,7 +18,7 @@ public class AlunoDisciplinaNotaService {
         return findByIdAlunoAndIdDisciplina(idAluno, idDisciplina, idCurso);
     }
 
-    public AlunoDisciplinaNota criaAlunoDisciplinaNota(int idAluno, int idDisciplina, int idCurso, float mediaFinal) {
+    public AlunoDisciplinaNota criaAlunoDisciplinaNota(int idAluno, int idDisciplina, int idCurso, double mediaFinal) {
         AlunoDisciplinaNota alunoDisciplinaNota = instanciaAlunoDisciplinaNota(idAluno, idDisciplina, idCurso, mediaFinal);
 
         setaIdCurso(alunoDisciplinaNota, (int) salvar(alunoDisciplinaNota));
@@ -35,7 +35,7 @@ public class AlunoDisciplinaNotaService {
     }
 
     @NonNull
-    private static AlunoDisciplinaNota instanciaAlunoDisciplinaNota(int idAluno, int idDisciplina, int idCurso, float mediaFinal) {
+    private static AlunoDisciplinaNota instanciaAlunoDisciplinaNota(int idAluno, int idDisciplina, int idCurso, double mediaFinal) {
         AlunoDisciplinaNota alunoDisciplinaNota = new AlunoDisciplinaNota();
         alunoDisciplinaNota.setIdDisciplina(idDisciplina);
         alunoDisciplinaNota.setIdAluno(idAluno);

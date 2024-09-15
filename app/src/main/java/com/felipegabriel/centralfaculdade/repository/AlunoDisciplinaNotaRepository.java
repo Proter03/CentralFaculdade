@@ -35,12 +35,4 @@ public class AlunoDisciplinaNotaRepository extends GenericDatabase<AlunoDiscipli
         return Optional.ofNullable(alunoDisciplinaNota);
     }
 
-    private static Cursor getCursor(List<Integer> parametros, SQLiteDatabase db, String query) {
-        String[] parametrosArray = new String[parametros.size()];
-        for (int i = 0; i < parametros.size(); i++) {
-            parametrosArray[i] = String.valueOf(parametros.get(i));
-        }
-        return db.rawQuery(query, parametrosArray);
-    }
-
 }

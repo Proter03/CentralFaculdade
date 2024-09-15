@@ -7,13 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class CursoDisciplinaTermo {
+public class Grade {
     private int id;
     private int idCurso;
-    private int idMateria;
+    private int idDisciplina;
     private int idTermo;
-    private Float horas;
-    private String Emenda;
+    private Double horas;
+    private String emenda;
 }

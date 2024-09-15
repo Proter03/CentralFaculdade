@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.felipegabriel.centralfaculdade.domain.Usuario;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Optional;
 
 public class GenericDatabase<T> extends SQLiteOpenHelper {
 
@@ -106,7 +108,7 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
         return db.insert(clazz.getSimpleName(), null, values);
     }
 
-    public T findById(int id) {
+    public Optional<T> findById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         createTableIfNotExists(db);
 
@@ -118,7 +120,7 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
         object = getObject(cursor, object);
 
         cursor.close();
-        return object;
+        return Optional.ofNullable(object);
     }
 
     public T checkUser(String username, String password) {
@@ -153,7 +155,7 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
                             field.set(object, cursor.getInt(columnIndex));
                         } else if (field.getType() == long.class || field.getType() == Long.class) {
                             field.set(object, cursor.getLong(columnIndex));
-                        } else if (field.getType() == double.class || field.getType() == Double.class) {
+                        } else if (field.getType() == double.class || field.getType() == Double.class || field.getType() == float.class || field.getType() == Float.class) {
                             field.set(object, cursor.getDouble(columnIndex));
                         }
                     }
@@ -163,6 +165,14 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
             }
         }
         return object;
+    }
+
+    protected static Cursor getCursor(List<Integer> parametros, SQLiteDatabase db, String query) {
+        String[] parametrosArray = new String[parametros.size()];
+        for (int i = 0; i < parametros.size(); i++) {
+            parametrosArray[i] = String.valueOf(parametros.get(i));
+        }
+        return db.rawQuery(query, parametrosArray);
     }
 
     private String getSQLiteType(Class<?> type) {

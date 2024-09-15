@@ -12,17 +12,29 @@ public class CursoService {
         cursoRepository = new CursoRepository(context, Curso.class);
     }
 
+    public Curso getCursoByDescricao(String descricao) {
+        return findByDescrica(descricao);
+    }
+
+    public Curso getCursoById(int idCurso) {
+        return getById(idCurso);
+    }
+
     public void criaCurso(String descricao) {
         montaCurso(descricao);
+    }
+
+    private Curso getById(int idCurso) {
+        return cursoRepository.findById(idCurso).orElseThrow(() -> new RuntimeException("Curso nao encontrado: " + idCurso));
     }
 
     private void montaCurso(String descricao) {
         Curso curso = instanciaCurso(descricao);
 
-        setaIdCurso(curso, (int) montaCurso(curso));
+        setaIdCurso(curso, (int) salvar(curso));
     }
 
-    private long montaCurso(Curso curso) {
+    private long salvar(Curso curso) {
         return cursoRepository.save(curso);
     }
 
@@ -35,10 +47,6 @@ public class CursoService {
         curso.setDescricao(descricao);
 
         return curso;
-    }
-
-    public Curso buscaCurso(String descricao) {
-        return findByDescrica(descricao);
     }
 
     private Curso findByDescrica(String descricao) {

@@ -12,14 +12,12 @@ import com.felipegabriel.centralfaculdade.domain.Disciplina;
 import com.felipegabriel.centralfaculdade.domain.Docente;
 import com.felipegabriel.centralfaculdade.domain.Sessao;
 import com.felipegabriel.centralfaculdade.domain.Termo;
-import com.felipegabriel.centralfaculdade.domain.Turma;
 import com.felipegabriel.centralfaculdade.domain.Usuario;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaTermo;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.CursoDisciplina;
-import com.felipegabriel.centralfaculdade.domain.relacionamentos.CursoDisciplinaTermo;
+import com.felipegabriel.centralfaculdade.domain.relacionamentos.Grade;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTermoProva;
-import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTurma;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.DocenteDisciplinaTermo;
 import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
 import com.felipegabriel.centralfaculdade.service.AlunoDisciplinaNotaService;
@@ -63,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaNotaNota() {
-        Curso curso = cursoService.buscaCurso("Ciência da Computação");;
+        Curso curso = cursoService.getCursoByDescricao("Ciência da Computação");;
         Aluno aluno = alunoService.buscaAluno(Sessao.getId());
-        Disciplina disciplina = disciplinaService.buscaDisciplina("Empreendedorismo");
+        Disciplina disciplina = disciplinaService.getDisciplinaByNome("Empreendedorismo");
 
         if (curso == null || aluno == null || disciplina == null) {
             throw new RuntimeException("Erro criar nota");
@@ -78,14 +76,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaDisciplina() {
-        Disciplina disciplina = disciplinaService.buscaDisciplina("Empreendedorismo");
+        Disciplina disciplina = disciplinaService.getDisciplinaByNome("Empreendedorismo");
         if (disciplina == null) {
             disciplinaService.criaDisciplina("Empreendedorismo");
         }
     }
 
     private void criaCurso() {
-        Curso curso = cursoService.buscaCurso("Ciência da Computação");
+        Curso curso = cursoService.getCursoByDescricao("Ciência da Computação");
         if (curso == null) {
             cursoService.criaCurso("Ciência da Computação");
         }
@@ -114,13 +112,11 @@ public class MainActivity extends AppCompatActivity {
         GenericDatabase<Disciplina> tableDisciplina;
         GenericDatabase<Docente> tableDocente;
         GenericDatabase<Termo> tableTermo;
-        GenericDatabase<Turma> tableTurma;
         GenericDatabase<AlunoDisciplinaTermo> tableAlunoDisciplinaTermo;
         GenericDatabase<CursoDisciplina> tableCursoDisciplina;
-        GenericDatabase<CursoDisciplinaTermo> tableCursoDisciplinaTermo;
+        GenericDatabase<Grade> tableCursoDisciplinaTermo;
         GenericDatabase<DisciplinaTermoProva> tableDisciplinaTermoProva;
         GenericDatabase<DocenteDisciplinaTermo> tableDocenteDisciplinaTermo;
-        GenericDatabase<DisciplinaTurma> tableDisciplinaTurma;
         GenericDatabase<AlunoDisciplinaNota> tableAlunoDisciplinaNota;
         try {
             GenericDatabase<Aluno> tableAluno = new GenericDatabase<>(this, Aluno.class);
@@ -138,23 +134,17 @@ public class MainActivity extends AppCompatActivity {
             tableTermo = new GenericDatabase<>(this, Termo.class);
             tableTermo.getWritableDatabase();
 
-            tableTurma = new GenericDatabase<>(this, Turma.class);
-            tableTurma.getWritableDatabase();
-
             tableAlunoDisciplinaTermo = new GenericDatabase<>(this, AlunoDisciplinaTermo.class);
             tableAlunoDisciplinaTermo.getWritableDatabase();
 
             tableCursoDisciplina = new GenericDatabase<>(this, CursoDisciplina.class);
             tableCursoDisciplina.getWritableDatabase();
 
-            tableCursoDisciplinaTermo = new GenericDatabase<>(this, CursoDisciplinaTermo.class);
+            tableCursoDisciplinaTermo = new GenericDatabase<>(this, Grade.class);
             tableCursoDisciplinaTermo.getWritableDatabase();
 
             tableDisciplinaTermoProva = new GenericDatabase<>(this, DisciplinaTermoProva.class);
             tableDisciplinaTermoProva.getWritableDatabase();
-
-            tableDisciplinaTurma = new GenericDatabase<>(this, DisciplinaTurma.class);
-            tableDisciplinaTurma.getWritableDatabase();
 
             tableDocenteDisciplinaTermo = new GenericDatabase<>(this, DocenteDisciplinaTermo.class);
             tableDocenteDisciplinaTermo.getWritableDatabase();
