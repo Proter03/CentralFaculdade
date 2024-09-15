@@ -9,13 +9,14 @@ import com.felipegabriel.centralfaculdade.domain.relacionamentos.HorarioAula;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HorarioAulaRepository extends GenericDatabase<HorarioAula>{
+public class HorarioAulaRepository extends GenericDatabase<HorarioAula> {
     private final String tableName = HorarioAula.class.getSimpleName();
+
     public HorarioAulaRepository(Context context, Class<HorarioAula> clazz) {
         super(context, clazz);
     }
 
-    public List<HorarioAula> findByIdTermo(int idTermo, int idCurso) {
+    public List<HorarioAula> findByIdTermoAndIdCurso(int idTermo, int idCurso) {
         SQLiteDatabase db = this.getWritableDatabase();
         createTableIfNotExists(db);
 

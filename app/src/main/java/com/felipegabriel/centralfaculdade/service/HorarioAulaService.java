@@ -30,7 +30,7 @@ public class HorarioAulaService {
 
     public List<HorarioAulaDTO> getHorariosAula(int idTermo, int idCurso) {
         List<HorarioAulaDTO> horarioAulaDTOS = new ArrayList<>();
-        List<HorarioAula> horariosAulas = horarioAulaRepository.findByIdTermo(idTermo, idCurso);
+        List<HorarioAula> horariosAulas = horarioAulaRepository.findByIdTermoAndIdCurso(idTermo, idCurso);
 
         for (HorarioAula horarioAula : horariosAulas) {
             String diaDaSemana = getDiaDaSemana(horarioAula);

@@ -14,4 +14,5 @@ public class HorarioProva {
     private int idDisciplina;
     private LocalDateTime dataProva;
     private int idTermo;
+    private int idCurso;
 }
