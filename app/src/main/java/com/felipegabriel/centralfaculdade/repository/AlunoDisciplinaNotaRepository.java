@@ -35,4 +35,21 @@ public class AlunoDisciplinaNotaRepository extends GenericDatabase<AlunoDiscipli
         return Optional.ofNullable(alunoDisciplinaNota);
     }
 
+    public List<AlunoDisciplinaNota> findByIdAluno(int idAluno) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        createTableIfNotExists(db);
+
+        List<AlunoDisciplinaNota> alunoDisciplinaNotas = new ArrayList<>();
+
+        String query = String.format("SELECT * FROM %s WHERE idAluno = ?", tableName);
+
+        List<Integer> parametros = new ArrayList<>();
+        parametros.add(idAluno);
+        Cursor cursor = getCursor(parametros, db, query);
+
+        alunoDisciplinaNotas = getObject(cursor, alunoDisciplinaNotas);
+
+        cursor.close();
+        return alunoDisciplinaNotas;
+    }
 }

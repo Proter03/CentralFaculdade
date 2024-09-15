@@ -61,21 +61,16 @@ public class NotasActivity extends AppCompatActivity {
 
     void init() {
         Aluno aluno = getAluno();
-        Curso curso = getCurso();
-        Disciplina disciplina = getDisciplina();
+        List<AlunoDisciplinaNota> alunoDisciplinaNotas = alunoDisciplinaNotaService.getAllNotas(aluno.getId());
 
-        AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
+        List<NotaDTO> notasDTO = new ArrayList<>();
 
-        NotaDTO notaDTO = new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal());
+        for (AlunoDisciplinaNota alunoDisciplinaNota : alunoDisciplinaNotas) {
+            Disciplina disciplina = disciplinaService.getDisciplinaById(alunoDisciplinaNota.getIdDisciplina());
+            notasDTO.add(new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal()));
+        }
 
-        List<AlunoDisciplinaNota> notas = new ArrayList<>();
-        notas.add(alunoDisciplinaNota);
-        notas.add(alunoDisciplinaNota);
-        notas.add(alunoDisciplinaNota);
-        notas.add(alunoDisciplinaNota);
-        notas.add(alunoDisciplinaNota);
-        notas.add(alunoDisciplinaNota);
-        notas.add(alunoDisciplinaNota);
+        List<NotaDTO> notas = new ArrayList<>(notasDTO);
 
         recyclerView = findViewById(R.id.rcNotas);
 
@@ -86,14 +81,6 @@ public class NotasActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private Disciplina getDisciplina() {
-        return disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS I");
-    }
-
-    private Curso getCurso() {
-        return cursoService.getCursoByDescricao("Ciência da Computação");
-    }
-
     private Aluno getAluno() {
         Aluno aluno = alunoService.buscaAluno(Sessao.getId());
 
@@ -102,9 +89,5 @@ public class NotasActivity extends AppCompatActivity {
         }
 
         return aluno;
-    }
-
-    private AlunoDisciplinaNota getAlunoDisciplinaNota(int idAluno, int idCurso, int idDisciplina) {
-        return alunoDisciplinaNotaService.getIdAlunoAndIdDisciplina(idAluno, idDisciplina, idCurso);
     }
 }

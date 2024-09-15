@@ -8,15 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.felipegabriel.centralfaculdade.R;
+import com.felipegabriel.centralfaculdade.domain.dto.NotaDTO;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
 
 import java.util.List;
 
 public class NotaAdapter extends RecyclerView.Adapter<NotaViewHolder> {
 
-    List<AlunoDisciplinaNota> notas;
+    List<NotaDTO> notas;
 
-    public NotaAdapter(List<AlunoDisciplinaNota> notas) {
+    public NotaAdapter(List<NotaDTO> notas) {
         this.notas = notas;
     }
 
@@ -29,9 +30,9 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NotaViewHolder holder, int position) {
-        AlunoDisciplinaNota alunoDisciplinaNota = notas.get(position);
-        holder.txtNota.setText(String.format("%.2f", alunoDisciplinaNota.getMediaFinal()));
-        holder.txtDisciplina.setText(String.format("%d", alunoDisciplinaNota.getIdDisciplina()));
+        NotaDTO alunoDisciplinaNota = notas.get(position);
+        holder.txtNota.setText(String.format("%.2f", alunoDisciplinaNota.getMedia()));
+        holder.txtDisciplina.setText(String.format("%s", alunoDisciplinaNota.getDisciplina()));
     }
 
     @Override

@@ -7,11 +7,17 @@ import androidx.annotation.NonNull;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
 import com.felipegabriel.centralfaculdade.repository.AlunoDisciplinaNotaRepository;
 
+import java.util.List;
+
 public class AlunoDisciplinaNotaService {
     private final AlunoDisciplinaNotaRepository alunoDisciplinaNotaRepository;
 
     public AlunoDisciplinaNotaService(Context context) {
         this.alunoDisciplinaNotaRepository = new AlunoDisciplinaNotaRepository(context, AlunoDisciplinaNota.class);
+    }
+
+    public List<AlunoDisciplinaNota> getAllNotas(int idAluno) {
+        return this.alunoDisciplinaNotaRepository.findByIdAluno(idAluno);
     }
 
     public AlunoDisciplinaNota getIdAlunoAndIdDisciplina(int idAluno, int idDisciplina, int idCurso) {
