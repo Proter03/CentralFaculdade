@@ -3,16 +3,23 @@ package com.felipegabriel.centralfaculdade.activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.felipegabriel.centralfaculdade.R;
+import com.felipegabriel.centralfaculdade.adapter.GradeAdapter;
+import com.felipegabriel.centralfaculdade.domain.dto.GradeDTO;
+import com.felipegabriel.centralfaculdade.service.GradeCurricularService;
+
+import java.util.List;
 
 public class GradeActivity extends AppCompatActivity {
+
+    GradeCurricularService gradeCurricularService;
+
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,10 @@ public class GradeActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        gradeCurricularService = new GradeCurricularService(this);
+
+        init();
     }
 
     @Override
@@ -32,5 +43,17 @@ public class GradeActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void init() {
+        List<GradeDTO> grade = gradeCurricularService.getGradePorIdCurso(1);
+
+        recyclerView = findViewById(R.id.rcGrade);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        GradeAdapter adapter = new GradeAdapter(grade);
+        recyclerView.setAdapter(adapter);
     }
 }

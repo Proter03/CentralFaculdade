@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.felipegabriel.centralfaculdade.R;
 import com.felipegabriel.centralfaculdade.domain.dto.NotaDTO;
-import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.ViewHolder> {
             txtMedia = itemView.findViewById(R.id.txtMedia_nota);
         }
 
-        private TextView txtDisciplina, txtMedia;
+        private final TextView txtDisciplina, txtMedia;
     }
 
     public NotaAdapter(List<NotaDTO> notas) {
@@ -40,8 +39,8 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View lista = LayoutInflater.from(parent.getContext()).inflate(R.layout.nota_template, parent, false);
-        return new ViewHolder(lista);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.nota_template, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override

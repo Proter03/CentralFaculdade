@@ -33,9 +33,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:fontFamily="@font/poppins_bold"
-                android:gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:padding="15dp"
                 android:text="DISCIPLINA"
+                android:textAlignment="gravity"
                 android:textColor="@color/primary_light_6"
                 android:textSize="16sp" />
 
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins_bold"
-                android:gravity="center_horizontal"
+                android:textAlignment="gravity"
+                android:gravity="center"
                 android:padding="15dp"
                 android:text="MÉDIA FINAL"
                 android:textColor="@color/primary_light_6"
@@ -61,6 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/table_notas" />
+        app:layout_constraintTop_toBottomOf="@+id/table_notas"
+        android:overScrollMode="ifContentScrolls"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
