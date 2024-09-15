@@ -10,6 +10,7 @@ import com.felipegabriel.centralfaculdade.domain.Aluno;
 import com.felipegabriel.centralfaculdade.domain.Curso;
 import com.felipegabriel.centralfaculdade.domain.Disciplina;
 import com.felipegabriel.centralfaculdade.domain.Sessao;
+import com.felipegabriel.centralfaculdade.domain.dto.NotaDTO;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
 import com.felipegabriel.centralfaculdade.service.AlunoDisciplinaNotaService;
 import com.felipegabriel.centralfaculdade.service.AlunoService;
@@ -43,6 +44,7 @@ public class Notas extends AppCompatActivity {
         Disciplina disciplina = getDisciplina();
 
         AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
+        NotaDTO notaDTO = new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal());
     }
 
     @Override
