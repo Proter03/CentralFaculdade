@@ -1,11 +1,15 @@
-package com.felipegabriel.centralfaculdade;
+package com.felipegabriel.centralfaculdade.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.felipegabriel.centralfaculdade.R;
+import com.felipegabriel.centralfaculdade.adapter.NotaAdapter;
 import com.felipegabriel.centralfaculdade.domain.Aluno;
 import com.felipegabriel.centralfaculdade.domain.Curso;
 import com.felipegabriel.centralfaculdade.domain.Disciplina;
@@ -17,11 +21,16 @@ import com.felipegabriel.centralfaculdade.service.AlunoService;
 import com.felipegabriel.centralfaculdade.service.CursoService;
 import com.felipegabriel.centralfaculdade.service.DisciplinaService;
 
-public class Notas extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class NotasActivity extends AppCompatActivity {
     private AlunoService alunoService;
     private DisciplinaService disciplinaService;
     private CursoService cursoService;
     private AlunoDisciplinaNotaService alunoDisciplinaNotaService;
+
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,7 @@ public class Notas extends AppCompatActivity {
 
         AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
         NotaDTO notaDTO = new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal());
+        init();
     }
 
     @Override
@@ -53,6 +63,31 @@ public class Notas extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void init() {
+        Aluno aluno = getAluno();
+        Curso curso = getCurso();
+        Disciplina disciplina = getDisciplina();
+
+        AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
+
+        List<AlunoDisciplinaNota> notas = new ArrayList<>();
+        notas.add(alunoDisciplinaNota);
+        notas.add(alunoDisciplinaNota);
+        notas.add(alunoDisciplinaNota);
+        notas.add(alunoDisciplinaNota);
+        notas.add(alunoDisciplinaNota);
+        notas.add(alunoDisciplinaNota);
+        notas.add(alunoDisciplinaNota);
+
+        recyclerView = findViewById(R.id.rcNotas);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        NotaAdapter adapter = new NotaAdapter(notas);
+        recyclerView.setAdapter(adapter);
     }
 
     private Disciplina getDisciplina() {

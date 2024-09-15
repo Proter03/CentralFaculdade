@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Notas">
+    tools:context=".activity.NotasActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_notas"
@@ -18,45 +18,49 @@
         app:title="NOTAS"
         app:titleTextAppearance="@style/ToolbarTheme" />
 
-    <ScrollView
+    <TableLayout
+        android:id="@+id/table_notas"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_notas">
 
-        <TableLayout
-            android:id="@+id/table_notas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <TableRow android:background="@color/primary_light_1">
 
-            <TableRow android:background="@color/primary_light_1">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center_horizontal"
+                android:padding="15dp"
+                android:text="DISCIPLINA"
+                android:textColor="@color/primary_light_6"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="@font/poppins_bold"
-                    android:gravity="center_horizontal"
-                    android:padding="15dp"
-                    android:text="DISCIPLINA"
-                    android:textColor="@color/primary_light_6"
-                    android:textSize="16sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center_horizontal"
+                android:padding="15dp"
+                android:text="MÉDIA FINAL"
+                android:textColor="@color/primary_light_6"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_bold"
-                    android:gravity="center_horizontal"
-                    android:padding="15dp"
-                    android:text="MÉDIA FINAL"
-                    android:textColor="@color/primary_light_6"
-                    android:textSize="16sp" />
+        </TableRow>
 
-            </TableRow>
+    </TableLayout>
 
-        </TableLayout>
-    </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcNotas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/table_notas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
