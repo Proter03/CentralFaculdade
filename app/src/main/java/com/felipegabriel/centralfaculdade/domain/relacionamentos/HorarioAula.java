@@ -15,4 +15,5 @@ public class HorarioAula {
     private LocalTime horario;
     private int idDisciplina;
     private int idTermo;
+    private int idCurso;
 }

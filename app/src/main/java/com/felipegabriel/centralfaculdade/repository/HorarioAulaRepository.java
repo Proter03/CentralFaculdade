@@ -15,16 +15,17 @@ public class HorarioAulaRepository extends GenericDatabase<HorarioAula>{
         super(context, clazz);
     }
 
-    public List<HorarioAula> findByIdTermo(int idTermo) {
+    public List<HorarioAula> findByIdTermo(int idTermo, int idCurso) {
         SQLiteDatabase db = this.getWritableDatabase();
         createTableIfNotExists(db);
 
         List<HorarioAula> horariosAulas = new ArrayList<>();
 
-        String query = String.format("SELECT * FROM %s WHERE idTermo = ?", tableName);
+        String query = String.format("SELECT * FROM %s WHERE idTermo = ? AND idCurso = ?", tableName);
 
         List<Integer> parametros = new ArrayList<>();
         parametros.add(idTermo);
+        parametros.add(idCurso);
         Cursor cursor = getCursor(parametros, db, query);
 
         horariosAulas = getObject(cursor, horariosAulas);

@@ -512,10 +512,10 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 1);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 1);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 1);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 1, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 1, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 1, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 1, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("COMPLEXIDADE DE ALGORITMOS II");
             grade = new Grade();
@@ -523,8 +523,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 4);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 4);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 4, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 4, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("COMPUTAÇÃO GRÁFICA II");
             grade = new Grade();
@@ -532,8 +532,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(9, 20), disciplina.getId(), 6);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(10, 10), disciplina.getId(), 6);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(9, 20), disciplina.getId(), 6, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(10, 10), disciplina.getId(), 6, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE APLICAÇÕES MOVEIS II");
             grade = new Grade();
@@ -541,8 +541,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 2);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 2);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 2, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 2, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE JOGOS II");
             grade = new Grade();
@@ -550,8 +550,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 4);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 4);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 4, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 4, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE NOVOS NEGÓCIOS");
             grade = new Grade();
@@ -559,8 +559,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 5);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 5);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 5, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 5, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO PARALELA II");
             grade = new Grade();
@@ -568,8 +568,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 2);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 2);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 2, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 2, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("PROJETO DE GRADUAÇÃO II");
             grade = new Grade();
@@ -577,8 +577,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(7, 30), disciplina.getId(), 6);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(8, 20), disciplina.getId(), 6);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(7, 30), disciplina.getId(), 6, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(8, 20), disciplina.getId(), 6, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("REDES E SISTEMAS DISTRIBUÍDOS II");
             grade = new Grade();
@@ -586,10 +586,10 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 3);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 3);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 3);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 3);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 3, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 3, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 3, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 3, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("ROBÓTICA E AUTOMAÇÃO II");
             grade = new Grade();
@@ -597,8 +597,8 @@ public class MainActivity extends AppCompatActivity {
             grade.setIdCurso(1);
             grade.setIdTermo(8);
             gradeCurricularService.criarGradeCurricular(grade);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 5);
-            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 5);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 5, 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 5, 1);
 
             disciplina = disciplinaService.getDisciplinaByNome("TRABALHO DE CONCLUSÃO DE CURSO II");
             grade = new Grade();

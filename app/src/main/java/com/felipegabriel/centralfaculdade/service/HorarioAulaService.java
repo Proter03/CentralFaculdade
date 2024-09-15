@@ -22,15 +22,15 @@ public class HorarioAulaService {
         this.disciplinaService = new DisciplinaService(context);
     }
 
-    public void criaHorarioAula(int idTermo, LocalTime horario, int idDisciplina, int idDiaDaSemana) {
-        HorarioAula horarioAula = getHorarioAula(idTermo, horario, idDisciplina, idDiaDaSemana);
+    public void criaHorarioAula(int idTermo, LocalTime horario, int idDisciplina, int idDiaDaSemana, int idCurso) {
+        HorarioAula horarioAula = getHorarioAula(idTermo, horario, idDisciplina, idDiaDaSemana, idCurso);
 
         horarioAulaRepository.save(horarioAula);
     }
 
-    public List<HorarioAulaDTO> getHorariosAula(int idTermo) {
+    public List<HorarioAulaDTO> getHorariosAula(int idTermo, int idCurso) {
         List<HorarioAulaDTO> horarioAulaDTOS = new ArrayList<>();
-        List<HorarioAula> horariosAulas = horarioAulaRepository.findByIdTermo(idTermo);
+        List<HorarioAula> horariosAulas = horarioAulaRepository.findByIdTermo(idTermo, idCurso);
 
         for (HorarioAula horarioAula : horariosAulas) {
             String diaDaSemana = getDiaDaSemana(horarioAula);
@@ -58,12 +58,13 @@ public class HorarioAulaService {
         }
     }
 
-    private static @NonNull HorarioAula getHorarioAula(int idTermo, LocalTime horario, int idDisciplina, int idDiaDaSemana) {
+    private static @NonNull HorarioAula getHorarioAula(int idTermo, LocalTime horario, int idDisciplina, int idDiaDaSemana, int idCurso) {
         HorarioAula horarioAula = new HorarioAula();
         horarioAula.setHorario(horario);
         horarioAula.setIdTermo(idTermo);
         horarioAula.setIdDisciplina(idDisciplina);
         horarioAula.setIdDiaDaSemana(idDiaDaSemana);
+        horarioAula.setIdCurso(idCurso);
         return horarioAula;
     }
 }
