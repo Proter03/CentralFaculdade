@@ -72,4 +72,8 @@ public class GradeCurricularService {
     private long salvar(Grade grade) {
         return gradeCurricularRepository.save(grade);
     }
+
+    public Grade getGradePorIdCursoAndIdDisciplinaAndIdTermo(int idCurso, int idDisciplina, int idTermo) {
+        return gradeCurricularRepository.findByIdCursoAndIdDisciplinaAndIdTermo(idCurso, idDisciplina, idTermo).orElse(null);
+    }
 }

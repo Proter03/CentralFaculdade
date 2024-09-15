@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.felipegabriel.centralfaculdade.domain.Disciplina;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DisciplinaRepository extends GenericDatabase<Disciplina> {
     private final String tableName = Disciplina.class.getSimpleName();
     public DisciplinaRepository(Context context, Class<Disciplina> clazz) {
@@ -30,5 +33,23 @@ public class DisciplinaRepository extends GenericDatabase<Disciplina> {
 
     private static Cursor getCursor(String descricao, SQLiteDatabase db, String query) {
         return db.rawQuery(query, new String[]{String.valueOf(descricao)});
+    }
+
+    public List<Disciplina> findAllByIdCurso(int idCurso) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        createTableIfNotExists(db);
+
+        List<Disciplina> disciplinas = new ArrayList<>();
+
+        String query = String.format("SELECT * FROM %s WHERE idCurso = ?", tableName);
+
+        List<Integer> parametros = new ArrayList<>();
+        parametros.add(idCurso);
+        Cursor cursor = getCursor(parametros, db, query);
+
+        disciplinas = getObject(cursor, disciplinas);
+
+        cursor.close();
+        return disciplinas;
     }
 }

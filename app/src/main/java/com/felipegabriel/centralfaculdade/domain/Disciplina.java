@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Disciplina {
     private int id;
+    private int idCurso;
     private String nome;
     private String emenda;
     private Double horas;

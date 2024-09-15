@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.felipegabriel.centralfaculdade.domain.Disciplina;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,14 +168,13 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
         return object;
     }
 
-
     protected List<T> getObject(Cursor cursor, List<T> listObject) {
         if (cursor.moveToFirst()) {
             try {
-                T object = clazz.newInstance();
                 listObject = new ArrayList<>();
                 do {
                     Field[] fields = clazz.getDeclaredFields();
+                    T object = clazz.newInstance();
                     for (Field field : fields) {
                         field.setAccessible(true);
                         int columnIndex = cursor.getColumnIndex(field.getName());
@@ -212,7 +213,6 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
 
         return db.compileStatement(query).simpleQueryForLong();
     }
-
 
     protected static Cursor getCursor(List<Integer> parametros, SQLiteDatabase db, String query) {
         String[] parametrosArray = new String[parametros.size()];

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.felipegabriel.centralfaculdade.domain.Disciplina;
 import com.felipegabriel.centralfaculdade.repository.DisciplinaRepository;
 
+import java.util.List;
+
 public class DisciplinaService {
     private final DisciplinaRepository disciplinaRepository;
 
@@ -12,8 +14,8 @@ public class DisciplinaService {
         disciplinaRepository = new DisciplinaRepository(context, Disciplina.class);
     }
 
-    public void criaDisciplina(String descricao, String emenda, Double horas) {
-        montaDisciplina(descricao, emenda, horas);
+    public void criaDisciplina(String descricao, String emenda, Double horas, int idCurso) {
+        montaDisciplina(descricao, emenda, horas, idCurso);
     }
 
     public Disciplina getDisciplinaByNome(String nome) {
@@ -32,8 +34,8 @@ public class DisciplinaService {
         return disciplinaRepository.findById(idDisciplina).orElseThrow(() -> new RuntimeException("Nao foi encontrado nenhuma disciplina com esse id: " + idDisciplina));
     }
 
-    private void montaDisciplina(String nome, String emenda, Double horas) {
-        Disciplina disciplina = instanciaDisciplina(nome, emenda, horas);
+    private void montaDisciplina(String nome, String emenda, Double horas, int idCurso) {
+        Disciplina disciplina = instanciaDisciplina(nome, emenda, horas, idCurso);
 
         setaIdDisciplina(disciplina, (int) montaDisciplina(disciplina));
     }
@@ -46,11 +48,12 @@ public class DisciplinaService {
         disciplina.setId(id);
     }
 
-    private static Disciplina instanciaDisciplina(String nome, String emenda, Double horas) {
+    private static Disciplina instanciaDisciplina(String nome, String emenda, Double horas, int idCurso) {
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(nome);
         disciplina.setEmenda(emenda);
         disciplina.setHoras(horas);
+        disciplina.setIdCurso(idCurso);
 
         return disciplina;
     }
@@ -59,4 +62,7 @@ public class DisciplinaService {
         return disciplinaRepository.findByNome(nome);
     }
 
+    public List<Disciplina> getAllByIdCurso(int idCurso) {
+        return disciplinaRepository.findAllByIdCurso(idCurso);
+    }
 }

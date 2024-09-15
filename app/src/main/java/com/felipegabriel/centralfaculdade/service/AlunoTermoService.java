@@ -19,4 +19,8 @@ public class AlunoTermoService {
     public long countAll() {
         return alunoTermoRepository.countAll();
     }
+
+    public AlunoTermo getById(int id) {
+        return alunoTermoRepository.findById(id).orElseThrow(() -> new RuntimeException("Aluno Termo nao encontrado"));
+    }
 }
