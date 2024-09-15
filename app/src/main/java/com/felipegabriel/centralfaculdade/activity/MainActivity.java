@@ -15,17 +15,18 @@ import com.felipegabriel.centralfaculdade.domain.Sessao;
 import com.felipegabriel.centralfaculdade.domain.Termo;
 import com.felipegabriel.centralfaculdade.domain.Usuario;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
-import com.felipegabriel.centralfaculdade.domain.relacionamentos.CursoDisciplina;
-import com.felipegabriel.centralfaculdade.domain.relacionamentos.DisciplinaTermoProva;
-import com.felipegabriel.centralfaculdade.domain.relacionamentos.DocenteDisciplinaTermo;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.Grade;
+import com.felipegabriel.centralfaculdade.domain.relacionamentos.HorarioAula;
 import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
 import com.felipegabriel.centralfaculdade.service.AlunoDisciplinaNotaService;
 import com.felipegabriel.centralfaculdade.service.AlunoService;
 import com.felipegabriel.centralfaculdade.service.CursoService;
 import com.felipegabriel.centralfaculdade.service.DisciplinaService;
 import com.felipegabriel.centralfaculdade.service.GradeCurricularService;
+import com.felipegabriel.centralfaculdade.service.HorarioAulaService;
 import com.felipegabriel.centralfaculdade.service.TermoService;
+
+import java.time.LocalTime;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private AlunoDisciplinaNotaService alunoDisciplinaNotaService;
     private GradeCurricularService gradeCurricularService;
     private TermoService termoService;
+    private HorarioAulaService horarioAulaService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         alunoDisciplinaNotaService = new AlunoDisciplinaNotaService(this);
         gradeCurricularService = new GradeCurricularService(this);
         termoService = new TermoService(this);
+        horarioAulaService = new HorarioAulaService(this);
 
         init();
     }
@@ -72,494 +75,522 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaTermos() {
-        for (int i = 0; i < 8; i++) {
-            termoService.criaTermo(i + 1 + "° TERMO");
+        if (termoService.getCount() != 8) {
+            for (int i = 0; i < 8; i++) {
+                termoService.criaTermo(i + 1 + "° TERMO");
+            }
         }
     }
 
     private void criaGradeCurricular() {
-        Disciplina disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS I");
-        Grade grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("APLICAÇÕES WEB I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO DIFERENCIAL E INTEGRAL I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("FUNDAMENTOS DE MATEMÁTICA ELEMENTAR I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("GEOMETRIA ANALÍTICA E VETORES I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("LÓGICA PARA COMPUTAÇÃO I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(1);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(2);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("APLICAÇÕES WEB II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(2);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO DIFERENCIAL E INTEGRAL II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(2);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("FUNDAMENTOS DE MATEMÁTICA ELEMENTAR II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(2);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("GEOMETRIA ANALÍTICA E VETORES II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(2);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("LÓGICA PARA COMPUTAÇÃO II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(2);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS III");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO DIFERENCIAL E INTEGRAL III");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ELETRÔNICA I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("METODOLOGIA CIENTÍFICA");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROBABILIDADE E ESTATÍSTICA I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROCESSAMENTO DIGITAL DE IMAGEM I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO ORIENTADA À OBJETOS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("TEORIA DA COMPUTAÇÃO I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(3);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ÁLGEBRA LINEAR");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS IV");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ELETRÔNICA II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROBABILIDADE E ESTATÍSTICA II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROCESSAMENTO DIGITAL DE IMAGEM II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO ORIENTADA À OBJETOS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("SEGURANÇA DA INFORMAÇÃO");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("TEORIA DA COMPUTAÇÃO II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(4);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("BANCO DE DADOS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO NUMÉRICO");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("COMPILADORES I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO WEB I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ENGENHARIA DE SOFTWARE I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("INTELIGÊNCIA ARTIFICIAL I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("LINGUAGEM E TÉCNICAS DE PROGRAMAÇÃO I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("SISTEMAS OPERACIONAIS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(5);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("BANCO DE DADOS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("COMPILADORES II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO WEB II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ENGENHARIA DE SOFTWARE II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("INTELIGÊNCIA ARTIFICIAL II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("LINGUAGEM E TÉCNICAS DE PROGRAMAÇÃO II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("OTIMIZAÇÃO LINEAR CONTÍNUA");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("SISTEMAS OPERACIONAIS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(6);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ANÁLISE E PROJETOS DE SISTEMAS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("COMPLEXIDADE DE ALGORITMOS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("COMPUTAÇÃO GRÁFICA I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE APLICAÇÕES MOVEIS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE JOGOS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("EMPREENDEDORISMO E INOVAÇÃO");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO PARALELA I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROJETO DE GRADUAÇÃO I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("REDES E SISTEMAS DISTRIBUÍDOS I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ROBÓTICA E AUTOMAÇÃO I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("TRABALHO DE CONCLUSÃO DE CURSO I");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(7);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ANÁLISE E PROJETOS DE SISTEMAS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("COMPLEXIDADE DE ALGORITMOS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("COMPUTAÇÃO GRÁFICA II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE APLICAÇÕES MOVEIS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE JOGOS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE NOVOS NEGÓCIOS");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO PARALELA II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("PROJETO DE GRADUAÇÃO II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("REDES E SISTEMAS DISTRIBUÍDOS II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("ROBÓTICA E AUTOMAÇÃO II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
-
-        disciplina = disciplinaService.getDisciplinaByNome("TRABALHO DE CONCLUSÃO DE CURSO II");
-        grade = new Grade();
-        grade.setIdDisciplina(disciplina.getId());
-        grade.setIdCurso(1);
-        grade.setIdTermo(8);
-        gradeCurricularService.criarGradeCurricular(grade);
+        if (gradeCurricularService.getAllRegistro() == 0) {
+            Disciplina disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS I");
+            Grade grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("APLICAÇÕES WEB I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO DIFERENCIAL E INTEGRAL I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("FUNDAMENTOS DE MATEMÁTICA ELEMENTAR I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("GEOMETRIA ANALÍTICA E VETORES I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("LÓGICA PARA COMPUTAÇÃO I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(1);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(2);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("APLICAÇÕES WEB II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(2);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO DIFERENCIAL E INTEGRAL II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(2);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("FUNDAMENTOS DE MATEMÁTICA ELEMENTAR II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(2);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("GEOMETRIA ANALÍTICA E VETORES II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(2);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("LÓGICA PARA COMPUTAÇÃO II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(2);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS III");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO DIFERENCIAL E INTEGRAL III");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ELETRÔNICA I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("METODOLOGIA CIENTÍFICA");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROBABILIDADE E ESTATÍSTICA I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROCESSAMENTO DIGITAL DE IMAGEM I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO ORIENTADA À OBJETOS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("TEORIA DA COMPUTAÇÃO I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(3);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ÁLGEBRA LINEAR");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS IV");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ELETRÔNICA II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROBABILIDADE E ESTATÍSTICA II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROCESSAMENTO DIGITAL DE IMAGEM II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO ORIENTADA À OBJETOS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("SEGURANÇA DA INFORMAÇÃO");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("TEORIA DA COMPUTAÇÃO II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(4);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("BANCO DE DADOS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("CÁLCULO NUMÉRICO");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("COMPILADORES I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO WEB I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ENGENHARIA DE SOFTWARE I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("INTELIGÊNCIA ARTIFICIAL I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("LINGUAGEM E TÉCNICAS DE PROGRAMAÇÃO I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("SISTEMAS OPERACIONAIS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(5);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("BANCO DE DADOS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("COMPILADORES II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO WEB II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ENGENHARIA DE SOFTWARE II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("INTELIGÊNCIA ARTIFICIAL II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("LINGUAGEM E TÉCNICAS DE PROGRAMAÇÃO II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("OTIMIZAÇÃO LINEAR CONTÍNUA");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("SISTEMAS OPERACIONAIS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(6);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ANÁLISE E PROJETOS DE SISTEMAS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("COMPLEXIDADE DE ALGORITMOS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("COMPUTAÇÃO GRÁFICA I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE APLICAÇÕES MOVEIS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE JOGOS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("EMPREENDEDORISMO E INOVAÇÃO");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO PARALELA I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROJETO DE GRADUAÇÃO I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("REDES E SISTEMAS DISTRIBUÍDOS I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ROBÓTICA E AUTOMAÇÃO I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("TRABALHO DE CONCLUSÃO DE CURSO I");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(7);
+            gradeCurricularService.criarGradeCurricular(grade);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ANÁLISE E PROJETOS DE SISTEMAS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 1);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 1);
+
+            disciplina = disciplinaService.getDisciplinaByNome("COMPLEXIDADE DE ALGORITMOS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 4);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 4);
+
+            disciplina = disciplinaService.getDisciplinaByNome("COMPUTAÇÃO GRÁFICA II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(9, 20), disciplina.getId(), 6);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(10, 10), disciplina.getId(), 6);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE APLICAÇÕES MOVEIS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 2);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 2);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE JOGOS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 4);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 4);
+
+            disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE NOVOS NEGÓCIOS");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 5);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 5);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO PARALELA II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 2);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 2);
+
+            disciplina = disciplinaService.getDisciplinaByNome("PROJETO DE GRADUAÇÃO II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(7, 30), disciplina.getId(), 6);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(8, 20), disciplina.getId(), 6);
+
+            disciplina = disciplinaService.getDisciplinaByNome("REDES E SISTEMAS DISTRIBUÍDOS II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 3);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 3);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 3);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 3);
+
+            disciplina = disciplinaService.getDisciplinaByNome("ROBÓTICA E AUTOMAÇÃO II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 5);
+            horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 5);
+
+            disciplina = disciplinaService.getDisciplinaByNome("TRABALHO DE CONCLUSÃO DE CURSO II");
+            grade = new Grade();
+            grade.setIdDisciplina(disciplina.getId());
+            grade.setIdCurso(1);
+            grade.setIdTermo(8);
+            gradeCurricularService.criarGradeCurricular(grade);
+        }
     }
 
     private void criaNota() {
@@ -700,24 +731,16 @@ public class MainActivity extends AppCompatActivity {
                 tableTermo.getWritableDatabase();
             }
 
-            try (GenericDatabase<CursoDisciplina> tableCursoDisciplina = new GenericDatabase<>(this, CursoDisciplina.class)) {
-                tableCursoDisciplina.getWritableDatabase();
-            }
-
             try (GenericDatabase<Grade> tableCursoDisciplinaTermo = new GenericDatabase<>(this, Grade.class)) {
                 tableCursoDisciplinaTermo.getWritableDatabase();
             }
 
-            try (GenericDatabase<DisciplinaTermoProva> tableDisciplinaTermoProva = new GenericDatabase<>(this, DisciplinaTermoProva.class)) {
-                tableDisciplinaTermoProva.getWritableDatabase();
-            }
-
-            try (GenericDatabase<DocenteDisciplinaTermo> tableDocenteDisciplinaTermo = new GenericDatabase<>(this, DocenteDisciplinaTermo.class)) {
-                tableDocenteDisciplinaTermo.getWritableDatabase();
-            }
-
             try (GenericDatabase<AlunoDisciplinaNota> tableAlunoDisciplinaNota = new GenericDatabase<>(this, AlunoDisciplinaNota.class)) {
                 tableAlunoDisciplinaNota.getWritableDatabase();
+            }
+
+            try (GenericDatabase<HorarioAula> tableHorarioAula = new GenericDatabase<>(this, HorarioAula.class)){
+                tableHorarioAula.getWritableDatabase();
             }
 
             tableUsuario = new GenericDatabase<>(this, Usuario.class);

@@ -46,6 +46,10 @@ public class GradeCurricularService {
         setaIdGrade(grade, (int)salvar(grade));
     }
 
+    public long getAllRegistro() {
+        return gradeCurricularRepository.countAll();
+    }
+
     @NonNull
     private static GradeDTO getGradeDTO(Grade grade, Curso curso, Disciplina disciplina, Termo termo) {
         return new GradeDTO(grade.getId(), curso.getId(), curso.getDescricao(), disciplina.getId(), disciplina.getNome(), termo.getId(), termo.getDescricao(), disciplina.getHoras(), disciplina.getEmenda());

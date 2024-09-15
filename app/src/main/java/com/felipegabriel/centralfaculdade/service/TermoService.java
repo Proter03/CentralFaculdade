@@ -18,6 +18,10 @@ public class TermoService {
         return getById(idTermo);
     }
 
+    public long getCount() {
+        return termoRepository.countAll();
+    }
+
     public void criaTermo(String descricao) {
         montaTermo(descricao);
     }
