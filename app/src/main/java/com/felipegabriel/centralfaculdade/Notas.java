@@ -54,7 +54,7 @@ public class Notas extends AppCompatActivity {
     }
 
     private Disciplina getDisciplina() {
-        return disciplinaService.getDisciplinaByNome("Empreendedorismo");
+        return disciplinaService.getDisciplinaByNome("ALGORITMOS E ESTRUTURAS DE DADOS I");
     }
 
     private Curso getCurso() {

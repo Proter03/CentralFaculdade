@@ -12,4 +12,6 @@ import lombok.Setter;
 public class Disciplina {
     private int id;
     private String nome;
+    private String emenda;
+    private Double horas;
 }

@@ -165,6 +165,18 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
         return object;
     }
 
+    public long countAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        createTableIfNotExists(db);
+
+        String tableName = clazz.getSimpleName();
+
+        String query = String.format("SELECT COUNT(*) AS totalRegistros FROM %s", tableName);
+
+        return db.compileStatement(query).simpleQueryForLong();
+    }
+
+
     protected static Cursor getCursor(List<Integer> parametros, SQLiteDatabase db, String query) {
         String[] parametrosArray = new String[parametros.size()];
         for (int i = 0; i < parametros.size(); i++) {

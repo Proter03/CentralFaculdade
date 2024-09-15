@@ -7,18 +7,18 @@ import com.felipegabriel.centralfaculdade.domain.Disciplina;
 import com.felipegabriel.centralfaculdade.domain.Termo;
 import com.felipegabriel.centralfaculdade.domain.dto.GradeDTO;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.Grade;
-import com.felipegabriel.centralfaculdade.repository.GradeRepository;
+import com.felipegabriel.centralfaculdade.repository.GradeCurricularRepository;
 
 import lombok.NonNull;
 
-public class GradeService {
-    private final GradeRepository gradeRepository;
+public class GradeCurricularService {
+    private final GradeCurricularRepository gradeCurricularRepository;
     private final CursoService cursoService;
     private final DisciplinaService disciplinaService;
     private final TermoService termoService;
 
-    public GradeService(Context context) {
-        this.gradeRepository = new GradeRepository(context, Grade.class);
+    public GradeCurricularService(Context context) {
+        this.gradeCurricularRepository = new GradeCurricularRepository(context, Grade.class);
         this.cursoService = new CursoService(context);
         this.disciplinaService = new DisciplinaService(context);
         this.termoService = new TermoService(context);
@@ -35,19 +35,17 @@ public class GradeService {
 
     @NonNull
     private static GradeDTO getGradeDTO(Grade grade, Curso curso, Disciplina disciplina, Termo termo) {
-        return new GradeDTO(grade.getId(), curso.getId(), curso.getDescricao(), disciplina.getId(), disciplina.getNome(), termo.getId(), termo.getDescricao(), grade.getHoras(), grade.getEmenda());
+        return new GradeDTO(grade.getId(), curso.getId(), curso.getDescricao(), disciplina.getId(), disciplina.getNome(), termo.getId(), termo.getDescricao(), disciplina.getHoras(), disciplina.getEmenda());
     }
     private Grade findByIdCurso(int idCurso) {
-        return gradeRepository.findByIdCurso(idCurso).orElseThrow(() -> new RuntimeException("Nenhuma grade com esse curso foi encontrada. Curso: " + idCurso));
+        return gradeCurricularRepository.findByIdCurso(idCurso).orElseThrow(() -> new RuntimeException("Nenhuma grade com esse curso foi encontrada. Curso: " + idCurso));
     }
     @NonNull
-    private static Grade instanciaGrade(int idCurso, int idDisciplina, int idTermo, Double horas, String emenda) {
+    private static Grade instanciaGrade(int idCurso, int idDisciplina, int idTermo) {
         Grade grade = new Grade();
         grade.setIdCurso(idCurso);
         grade.setIdTermo(idTermo);
         grade.setIdDisciplina(idDisciplina);
-        grade.setHoras(horas);
-        grade.setEmenda(emenda);
 
         return grade;
     }
@@ -55,6 +53,6 @@ public class GradeService {
         grade.setId(id);
     }
     private long salvar(Grade grade) {
-        return gradeRepository.save(grade);
+        return gradeCurricularRepository.save(grade);
     }
 }

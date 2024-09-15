@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GradeRepository extends GenericDatabase<Grade> {
+public class GradeCurricularRepository extends GenericDatabase<Grade> {
     private final String tableName = Grade.class.getSimpleName();
-    public GradeRepository(Context context, Class<Grade> clazz) {
+    public GradeCurricularRepository(Context context, Class<Grade> clazz) {
         super(context, clazz);
     }
 

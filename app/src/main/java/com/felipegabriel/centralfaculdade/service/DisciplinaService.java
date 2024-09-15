@@ -12,12 +12,16 @@ public class DisciplinaService {
         disciplinaRepository = new DisciplinaRepository(context, Disciplina.class);
     }
 
-    public void criaDisciplina(String descricao) {
-        montaDisciplina(descricao);
+    public void criaDisciplina(String descricao, String emenda, Double horas) {
+        montaDisciplina(descricao, emenda, horas);
     }
 
     public Disciplina getDisciplinaByNome(String nome) {
         return findByNome(nome);
+    }
+
+    public long getCountAllRegistro() {
+        return disciplinaRepository.countAll();
     }
 
     public Disciplina getDisciplinaById(int idDisciplina) {
@@ -28,8 +32,8 @@ public class DisciplinaService {
         return disciplinaRepository.findById(idDisciplina).orElseThrow(() -> new RuntimeException("Nao foi encontrado nenhuma disciplina com esse id: " + idDisciplina));
     }
 
-    private void montaDisciplina(String nome) {
-        Disciplina disciplina = instanciaDisciplina(nome);
+    private void montaDisciplina(String nome, String emenda, Double horas) {
+        Disciplina disciplina = instanciaDisciplina(nome, emenda, horas);
 
         setaIdDisciplina(disciplina, (int) montaDisciplina(disciplina));
     }
@@ -42,9 +46,11 @@ public class DisciplinaService {
         disciplina.setId(id);
     }
 
-    private static Disciplina instanciaDisciplina(String nome) {
+    private static Disciplina instanciaDisciplina(String nome, String emenda, Double horas) {
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(nome);
+        disciplina.setEmenda(emenda);
+        disciplina.setHoras(horas);
 
         return disciplina;
     }
