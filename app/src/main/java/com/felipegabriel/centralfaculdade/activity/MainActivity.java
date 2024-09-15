@@ -756,4 +756,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotasActivity.class);
         startActivity(intent);
     }
+
+    public void onClickGrade(View view) {
+        Intent intent = new Intent(this, GradeActivity.class);
+        startActivity(intent);
+    }
 }
