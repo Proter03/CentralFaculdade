@@ -48,12 +48,6 @@ public class NotasActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        Aluno aluno = getAluno();
-        Curso curso = getCurso();
-        Disciplina disciplina = getDisciplina();
-
-        AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
-        NotaDTO notaDTO = new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal());
         init();
     }
 
@@ -71,6 +65,8 @@ public class NotasActivity extends AppCompatActivity {
         Disciplina disciplina = getDisciplina();
 
         AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
+
+        NotaDTO notaDTO = new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal());
 
         List<AlunoDisciplinaNota> notas = new ArrayList<>();
         notas.add(alunoDisciplinaNota);
