@@ -43,7 +43,6 @@ public class Notas extends AppCompatActivity {
         Disciplina disciplina = getDisciplina();
 
         AlunoDisciplinaNota alunoDisciplinaNota = getAlunoDisciplinaNota(aluno.getId(), curso.getId(), disciplina.getId());
-        System.out.println(String.format("Disciplina \"%s\" Curso \"%s\" Aluno \"%s\" Nota \"%f\"", disciplina.getNome(), curso.getDescricao(), aluno.getNome(), alunoDisciplinaNota.getMediaFinal()));
     }
 
     @Override

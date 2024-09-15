@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaNotaNota() {
-        Curso curso = cursoService.getCursoByDescricao("Ciência da Computação");;
+        Curso curso = cursoService.getCursoByDescricao("Ciência da Computação");
         Aluno aluno = alunoService.buscaAluno(Sessao.getId());
         Disciplina disciplina = disciplinaService.getDisciplinaByNome("Empreendedorismo");
 
@@ -109,51 +109,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getGenericDatabase() {
-        GenericDatabase<Disciplina> tableDisciplina;
-        GenericDatabase<Docente> tableDocente;
-        GenericDatabase<Termo> tableTermo;
-        GenericDatabase<AlunoDisciplinaTermo> tableAlunoDisciplinaTermo;
-        GenericDatabase<CursoDisciplina> tableCursoDisciplina;
-        GenericDatabase<Grade> tableCursoDisciplinaTermo;
-        GenericDatabase<DisciplinaTermoProva> tableDisciplinaTermoProva;
-        GenericDatabase<DocenteDisciplinaTermo> tableDocenteDisciplinaTermo;
-        GenericDatabase<AlunoDisciplinaNota> tableAlunoDisciplinaNota;
+
         try {
-            GenericDatabase<Aluno> tableAluno = new GenericDatabase<>(this, Aluno.class);
-            tableAluno.getWritableDatabase();
+            try (GenericDatabase<Aluno> tableAluno = new GenericDatabase<>(this, Aluno.class)) {
+                tableAluno.getWritableDatabase();
+            }
 
-            GenericDatabase<Curso> tableCurso = new GenericDatabase<>(this, Curso.class);
-            tableCurso.getWritableDatabase();
+            try (GenericDatabase<Curso> tableCurso = new GenericDatabase<>(this, Curso.class)) {
+                tableCurso.getWritableDatabase();
+            }
 
-            tableDisciplina = new GenericDatabase<>(this, Disciplina.class);
-            tableDisciplina.getWritableDatabase();
+            try (GenericDatabase<Disciplina> tableDisciplina = new GenericDatabase<>(this, Disciplina.class)) {
+                tableDisciplina.getWritableDatabase();
+            }
 
-            tableDocente = new GenericDatabase<>(this, Docente.class);
-            tableDocente.getWritableDatabase();
+            try (GenericDatabase<Docente> tableDocente = new GenericDatabase<>(this, Docente.class)) {
+                tableDocente.getWritableDatabase();
+            }
 
-            tableTermo = new GenericDatabase<>(this, Termo.class);
-            tableTermo.getWritableDatabase();
+            try (GenericDatabase<Termo> tableTermo = new GenericDatabase<>(this, Termo.class)) {
+                tableTermo.getWritableDatabase();
+            }
 
-            tableAlunoDisciplinaTermo = new GenericDatabase<>(this, AlunoDisciplinaTermo.class);
-            tableAlunoDisciplinaTermo.getWritableDatabase();
+            try (GenericDatabase<AlunoDisciplinaTermo> tableAlunoDisciplinaTermo = new GenericDatabase<>(this, AlunoDisciplinaTermo.class)) {
+                tableAlunoDisciplinaTermo.getWritableDatabase();
+            }
 
-            tableCursoDisciplina = new GenericDatabase<>(this, CursoDisciplina.class);
-            tableCursoDisciplina.getWritableDatabase();
+            try (GenericDatabase<CursoDisciplina> tableCursoDisciplina = new GenericDatabase<>(this, CursoDisciplina.class)) {
+                tableCursoDisciplina.getWritableDatabase();
+            }
 
-            tableCursoDisciplinaTermo = new GenericDatabase<>(this, Grade.class);
-            tableCursoDisciplinaTermo.getWritableDatabase();
+            try (GenericDatabase<Grade> tableCursoDisciplinaTermo = new GenericDatabase<>(this, Grade.class)) {
+                tableCursoDisciplinaTermo.getWritableDatabase();
+            }
 
-            tableDisciplinaTermoProva = new GenericDatabase<>(this, DisciplinaTermoProva.class);
-            tableDisciplinaTermoProva.getWritableDatabase();
+            try (GenericDatabase<DisciplinaTermoProva> tableDisciplinaTermoProva = new GenericDatabase<>(this, DisciplinaTermoProva.class)) {
+                tableDisciplinaTermoProva.getWritableDatabase();
+            }
 
-            tableDocenteDisciplinaTermo = new GenericDatabase<>(this, DocenteDisciplinaTermo.class);
-            tableDocenteDisciplinaTermo.getWritableDatabase();
+            try (GenericDatabase<DocenteDisciplinaTermo> tableDocenteDisciplinaTermo = new GenericDatabase<>(this, DocenteDisciplinaTermo.class)) {
+                tableDocenteDisciplinaTermo.getWritableDatabase();
+            }
+
+            try (GenericDatabase<AlunoDisciplinaNota> tableAlunoDisciplinaNota = new GenericDatabase<>(this, AlunoDisciplinaNota.class)) {
+                tableAlunoDisciplinaNota.getWritableDatabase();
+            }
 
             tableUsuario = new GenericDatabase<>(this, Usuario.class);
             tableUsuario.getWritableDatabase();
 
-            tableAlunoDisciplinaNota = new GenericDatabase<>(this, AlunoDisciplinaNota.class);
-            tableAlunoDisciplinaNota.getWritableDatabase();
+
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar tabelas: " + e.getMessage());
         }

@@ -1,6 +1,5 @@
 package com.felipegabriel.centralfaculdade.domain.relacionamentos;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
