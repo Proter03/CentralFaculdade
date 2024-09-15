@@ -9,6 +9,9 @@ import com.felipegabriel.centralfaculdade.domain.dto.GradeDTO;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.Grade;
 import com.felipegabriel.centralfaculdade.repository.GradeCurricularRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.NonNull;
 
 public class GradeCurricularService {
@@ -24,13 +27,19 @@ public class GradeCurricularService {
         this.termoService = new TermoService(context);
     }
 
-    public GradeDTO getGradePorIdCurso(int idCurso) {
+    public List<GradeDTO> getGradePorIdCurso(int idCurso) {
+        List<GradeDTO> gradeDTOS = new ArrayList<>();
         Curso curso = cursoService.getCursoById(idCurso);
-        Grade grade = findByIdCurso(curso.getId());
-        Disciplina disciplina = disciplinaService.getDisciplinaById(grade.getIdDisciplina());
-        Termo termo = termoService.getTermoById(grade.getIdTermo());
+        List<Grade> grade = gradeCurricularRepository.findAllByIdCurso(curso.getId());
 
-        return getGradeDTO(grade, curso, disciplina, termo);
+        for (Grade item : grade) {
+            Disciplina disciplina = disciplinaService.getDisciplinaById(item.getIdDisciplina());
+            Termo termo = termoService.getTermoById(item.getIdTermo());
+
+            gradeDTOS.add(getGradeDTO(item, curso, disciplina, termo));
+        }
+
+        return gradeDTOS;
     }
 
     public void criarGradeCurricular(Grade grade) {
