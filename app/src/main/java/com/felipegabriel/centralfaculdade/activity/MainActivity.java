@@ -10,16 +10,18 @@ import com.felipegabriel.centralfaculdade.R;
 import com.felipegabriel.centralfaculdade.domain.Aluno;
 import com.felipegabriel.centralfaculdade.domain.Curso;
 import com.felipegabriel.centralfaculdade.domain.Disciplina;
-import com.felipegabriel.centralfaculdade.domain.Docente;
 import com.felipegabriel.centralfaculdade.domain.Sessao;
 import com.felipegabriel.centralfaculdade.domain.Termo;
 import com.felipegabriel.centralfaculdade.domain.Usuario;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoDisciplinaNota;
+import com.felipegabriel.centralfaculdade.domain.relacionamentos.AlunoTermo;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.Grade;
 import com.felipegabriel.centralfaculdade.domain.relacionamentos.HorarioAula;
+import com.felipegabriel.centralfaculdade.domain.relacionamentos.HorarioProva;
 import com.felipegabriel.centralfaculdade.repository.GenericDatabase;
 import com.felipegabriel.centralfaculdade.service.AlunoDisciplinaNotaService;
 import com.felipegabriel.centralfaculdade.service.AlunoService;
+import com.felipegabriel.centralfaculdade.service.AlunoTermoService;
 import com.felipegabriel.centralfaculdade.service.CursoService;
 import com.felipegabriel.centralfaculdade.service.DisciplinaService;
 import com.felipegabriel.centralfaculdade.service.GradeCurricularService;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private GradeCurricularService gradeCurricularService;
     private TermoService termoService;
     private HorarioAulaService horarioAulaService;
+    private AlunoTermoService alunoTermoService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService = new GradeCurricularService(this);
         termoService = new TermoService(this);
         horarioAulaService = new HorarioAulaService(this);
+        alunoTermoService = new AlunoTermoService(this);
 
         init();
     }
@@ -71,7 +75,19 @@ public class MainActivity extends AppCompatActivity {
 
         criaTermos();
 
+        criaAlunoTermo();
+
         criaGradeCurricular();
+    }
+
+    private void criaAlunoTermo() {
+        if (alunoTermoService.countAll() <= 0) {
+            AlunoTermo alunoTermo = new AlunoTermo();
+            alunoTermo.setIdAluno(alunoService.buscaAluno(Sessao.getId()).getId());
+            alunoTermo.setIdTermo(8);
+
+            alunoTermoService.criaAlunoTermo(alunoTermo);
+        }
     }
 
     private void criaTermos() {
@@ -723,10 +739,6 @@ public class MainActivity extends AppCompatActivity {
                 tableDisciplina.getWritableDatabase();
             }
 
-            try (GenericDatabase<Docente> tableDocente = new GenericDatabase<>(this, Docente.class)) {
-                tableDocente.getWritableDatabase();
-            }
-
             try (GenericDatabase<Termo> tableTermo = new GenericDatabase<>(this, Termo.class)) {
                 tableTermo.getWritableDatabase();
             }
@@ -741,6 +753,14 @@ public class MainActivity extends AppCompatActivity {
 
             try (GenericDatabase<HorarioAula> tableHorarioAula = new GenericDatabase<>(this, HorarioAula.class)){
                 tableHorarioAula.getWritableDatabase();
+            }
+
+            try (GenericDatabase<AlunoTermo> tableAlunoTermo = new GenericDatabase<>(this, AlunoTermo.class)){
+                tableAlunoTermo.getWritableDatabase();
+            }
+
+            try (GenericDatabase<HorarioProva> tableHorarioProva = new GenericDatabase<>(this, HorarioProva.class)){
+                tableHorarioProva.getWritableDatabase();
             }
 
             tableUsuario = new GenericDatabase<>(this, Usuario.class);

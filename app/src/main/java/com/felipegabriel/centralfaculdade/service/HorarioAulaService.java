@@ -43,21 +43,19 @@ public class HorarioAulaService {
     }
 
     private static @NonNull String getDiaDaSemana(HorarioAula horarioAula) {
-        String diaDaSemana = "DOMINGO";
         if (horarioAula.getIdDiaDaSemana() == 1) {
-            diaDaSemana = "2° FEIRA";
+            return "2° FEIRA";
         } else if (horarioAula.getIdDiaDaSemana() == 2) {
-            diaDaSemana = "3° FEIRA";
+            return "3° FEIRA";
         } else if (horarioAula.getIdDiaDaSemana() == 3) {
-            diaDaSemana = "4° FEIRA";
+            return "4° FEIRA";
         } else if (horarioAula.getIdDiaDaSemana() == 4) {
-            diaDaSemana = "5° FEIRA";
+            return "5° FEIRA";
         } else if (horarioAula.getIdDiaDaSemana() == 5) {
-            diaDaSemana = "6° FEIRA";
+            return "6° FEIRA";
         } else {
-            diaDaSemana = "SÁBADO";
+            return "SÁBADO";
         }
-        return diaDaSemana;
     }
 
     private static @NonNull HorarioAula getHorarioAula(int idTermo, LocalTime horario, int idDisciplina, int idDiaDaSemana) {
