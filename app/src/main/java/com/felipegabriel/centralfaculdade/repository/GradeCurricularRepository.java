@@ -33,4 +33,21 @@ public class GradeCurricularRepository extends GenericDatabase<Grade> {
         return Optional.ofNullable(grade);
     }
 
+    public List<Grade> findAllByIdCurso(int idCurso) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        createTableIfNotExists(db);
+
+        List<Grade> grades = new ArrayList<>();
+
+        String query = String.format("SELECT * FROM %s WHERE idCurso = ?", tableName);
+
+        List<Integer> parametros = new ArrayList<>();
+        parametros.add(idCurso);
+        Cursor cursor = getCursor(parametros, db, query);
+
+        grades = getObject(cursor, grades);
+
+        cursor.close();
+        return grades;
+    }
 }
