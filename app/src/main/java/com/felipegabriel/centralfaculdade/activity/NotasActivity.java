@@ -70,14 +70,12 @@ public class NotasActivity extends AppCompatActivity {
             notasDTO.add(new NotaDTO(disciplina.getNome(), alunoDisciplinaNota.getMediaFinal()));
         }
 
-        List<NotaDTO> notas = new ArrayList<>(notasDTO);
-
         recyclerView = findViewById(R.id.rcNotas);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        NotaAdapter adapter = new NotaAdapter(notas);
+        NotaAdapter adapter = new NotaAdapter(notasDTO);
         recyclerView.setAdapter(adapter);
     }
 

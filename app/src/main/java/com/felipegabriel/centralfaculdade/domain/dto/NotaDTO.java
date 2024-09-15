@@ -8,5 +8,4 @@ import lombok.Getter;
 public class NotaDTO {
     private String disciplina;
     private double media;
-
 }
