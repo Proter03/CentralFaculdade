@@ -1,7 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/disciplina_template">
+
+        <TextView
+            android:id="@+id/txtDisciplina_disciplina"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center_vertical"
+            android:padding="15dp"
+            android:text="DISCIPLINA"
+            android:textAlignment="gravity"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtCargaHoraria_disciplina"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="CARGA HORÁRIA"
+            android:textAlignment="gravity"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emenda_disciplina"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingLeft="15dp"
+            android:text="Emenda"
+            android:textColor="@color/primary_dark_5"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtEmenda_disciplina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:padding="15dp"
+            android:text="TextView"
+            android:textColor="@color/black" />
+    </LinearLayout>
 
 </LinearLayout>

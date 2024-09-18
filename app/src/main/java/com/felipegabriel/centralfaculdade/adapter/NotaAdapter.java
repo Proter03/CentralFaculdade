@@ -1,5 +1,7 @@
 package com.felipegabriel.centralfaculdade.adapter;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,10 @@ import lombok.Getter;
 
 public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.ViewHolder> {
 
-    List<NotaDTO> notas;
+    private final List<NotaDTO> notas;
+
+    private final int color_nota_alta = Color.parseColor("#007BFF");
+    private final int color_nota_baixa = Color.parseColor("#DC3545");
 
     @Getter
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -43,11 +48,13 @@ public class NotaAdapter extends RecyclerView.Adapter<NotaAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotaDTO alunoDisciplinaNota = notas.get(position);
         holder.getTxtDisciplina().setText(alunoDisciplinaNota.getDisciplina());
         holder.getTxtMedia().setText(String.format("%.2f", alunoDisciplinaNota.getMedia()));
+        holder.getTxtMedia().setTextColor(alunoDisciplinaNota.getMedia() < 7 ? color_nota_baixa : color_nota_alta);
     }
 
     @Override
