@@ -1,6 +1,8 @@
 package com.felipegabriel.centralfaculdade.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private AlunoTermoService alunoTermoService;
     private HorarioProvaService horarioProvaService;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         horarioAulaService = new HorarioAulaService(this);
         alunoTermoService = new AlunoTermoService(this);
         horarioProvaService = new HorarioProvaService(this);
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         init();
     }
@@ -139,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
             List<Disciplina> disciplinas = disciplinaService.getAllByIdCurso(curso.getId());
 
-            for(Disciplina disciplina : disciplinas) {
+            for (Disciplina disciplina : disciplinas) {
                 Random random = new Random();
                 Grade grade = gradeCurricularService.getGradePorIdCursoAndIdDisciplinaAndIdTermo(curso.getId(), disciplina.getId(), alunoTermo.getIdTermo());
                 if (grade != null) {
@@ -276,15 +281,15 @@ public class MainActivity extends AppCompatActivity {
                 tableAlunoDisciplinaNota.getWritableDatabase();
             }
 
-            try (GenericDatabase<HorarioAula> tableHorarioAula = new GenericDatabase<>(this, HorarioAula.class)){
+            try (GenericDatabase<HorarioAula> tableHorarioAula = new GenericDatabase<>(this, HorarioAula.class)) {
                 tableHorarioAula.getWritableDatabase();
             }
 
-            try (GenericDatabase<AlunoTermo> tableAlunoTermo = new GenericDatabase<>(this, AlunoTermo.class)){
+            try (GenericDatabase<AlunoTermo> tableAlunoTermo = new GenericDatabase<>(this, AlunoTermo.class)) {
                 tableAlunoTermo.getWritableDatabase();
             }
 
-            try (GenericDatabase<HorarioProva> tableHorarioProva = new GenericDatabase<>(this, HorarioProva.class)){
+            try (GenericDatabase<HorarioProva> tableHorarioProva = new GenericDatabase<>(this, HorarioProva.class)) {
                 tableHorarioProva.getWritableDatabase();
             }
 
@@ -298,12 +303,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickNotas(View view) {
-        Intent intent = new Intent(this, NotasActivity.class);
-        startActivity(intent);
+        this.openActivity(NotasActivity.class);
     }
 
     public void onClickGrade(View view) {
-        Intent intent = new Intent(this, GradeActivity.class);
+        this.openActivity(GradeActivity.class);
+    }
+
+    public void onClickHorarios(View view) {
+        this.openActivity(HorariosActivity.class);
+    }
+
+    private <T> void openActivity(Class<T> aClass) {
+        Intent intent = new Intent(this, aClass);
         startActivity(intent);
     }
 
@@ -318,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 1, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 1, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 1, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 9, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 9, 19, 20), disciplina, grade);
 
 
         disciplina = disciplinaService.getDisciplinaByNome("COMPLEXIDADE DE ALGORITMOS II");
@@ -329,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 4, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 4, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 19, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 19, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("COMPUTAÇÃO GRÁFICA II");
         grade = new Grade();
@@ -339,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(9, 20), disciplina.getId(), 6, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(10, 10), disciplina.getId(), 6, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 18, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 18, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE APLICAÇÕES MOVEIS II");
         grade = new Grade();
@@ -349,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 2, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 2, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 17, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 17, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE JOGOS II");
         grade = new Grade();
@@ -359,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 4, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 4, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 12, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 12, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("DESENVOLVIMENTO DE NOVOS NEGÓCIOS");
         grade = new Grade();
@@ -369,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 5, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 5, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 20, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 20, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("PROGRAMAÇÃO PARALELA II");
         grade = new Grade();
@@ -379,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 2, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 2, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 10, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 10, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("PROJETO DE GRADUAÇÃO II");
         grade = new Grade();
@@ -389,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(7, 30), disciplina.getId(), 6, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(8, 20), disciplina.getId(), 6, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 16, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 16, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("REDES E SISTEMAS DISTRIBUÍDOS II");
         grade = new Grade();
@@ -401,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 3, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(21, 10), disciplina.getId(), 3, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(22, 0), disciplina.getId(), 3, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 11, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 11, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("ROBÓTICA E AUTOMAÇÃO II");
         grade = new Grade();
@@ -411,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
         gradeCurricularService.criarGradeCurricular(grade);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(19, 20), disciplina.getId(), 5, 1);
         horarioAulaService.criaHorarioAula(grade.getIdTermo(), LocalTime.of(20, 10), disciplina.getId(), 5, 1);
-        criaHorarioProva(LocalDateTime.of(2024, 9, 13, 19,20), disciplina, grade);
+        criaHorarioProva(LocalDateTime.of(2024, 9, 13, 19, 20), disciplina, grade);
 
         disciplina = disciplinaService.getDisciplinaByNome("TRABALHO DE CONCLUSÃO DE CURSO II");
         grade = new Grade();

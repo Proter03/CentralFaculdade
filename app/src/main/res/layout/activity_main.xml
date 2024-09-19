@@ -27,6 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
+        android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +47,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -54,12 +56,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onClickNotas"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/icon_notas"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
                     app:srcCompat="@drawable/icon_paste" />
 
                 <TextView
@@ -79,12 +83,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onClickGrade"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/icon_gradeCurso"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
                     app:srcCompat="@drawable/baseline_account_balance_24" />
 
                 <TextView
@@ -105,6 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -112,12 +119,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:onClick="onClickHorarios"
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/icon_horarioAulas"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
                     app:srcCompat="@drawable/baseline_access_time_24" />
 
                 <TextView
@@ -125,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="HORÁRIO DE AULAS"
+                    android:text="HORÁRIOS DE AULA"
                     android:textAlignment="center"
                     android:textColor="@color/primary_dark_3"
                     android:textSize="16sp" />
@@ -136,12 +146,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/icon_horarioProvas"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
                     app:srcCompat="@drawable/baseline_calendar_month_24" />
 
                 <TextView

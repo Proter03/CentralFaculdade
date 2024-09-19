@@ -7,16 +7,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.felipegabriel.centralfaculdade.domain.Disciplina;
-
 import java.lang.reflect.Field;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class GenericDatabase<T> extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "GeniusFit";
+    private static final String DATABASE_NAME = "CentralAlunoDB";
     private static final int DATABASE_VERSION = 1;
     private static final String COLUMN_USERNAME = "usuario";
     private static final String COLUMN_PASSWORD = "senha";
@@ -98,6 +98,8 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
                             values.put(fieldName, (Long) fieldValue);
                         } else if (fieldValue instanceof Double) {
                             values.put(fieldName, (Double) fieldValue);
+                        } else if (fieldValue instanceof LocalTime) {
+                            values.put(fieldName, ((LocalTime) fieldValue).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                         }
                     }
                 } catch (IllegalAccessException e) {
@@ -188,11 +190,13 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
                                 field.set(object, cursor.getLong(columnIndex));
                             } else if (field.getType() == double.class || field.getType() == Double.class || field.getType() == float.class || field.getType() == Float.class) {
                                 field.set(object, cursor.getDouble(columnIndex));
+                            } else if (field.getType() == LocalTime.class) {
+                                field.set(object, LocalTime.parse(cursor.getString(columnIndex)));
                             }
                         }
                     }
                     listObject.add(object);
-                } while(cursor.moveToNext()) ;
+                } while (cursor.moveToNext());
 
             } catch (IllegalAccessException e) {
                 throw new RuntimeException("Erro ao buscar por id: " + e.getMessage());
