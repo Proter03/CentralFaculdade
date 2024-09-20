@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation("org.projectlombok:lombok:1.18.32")
+    implementation("androidx.activity:activity:1.9.2")
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
     implementation("org.slf4j:slf4j-api:1.7.25")

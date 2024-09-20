@@ -5,13 +5,13 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.felipegabriel.centralfaculdade.R;
 import com.felipegabriel.centralfaculdade.adapter.NotaAdapter;
 import com.felipegabriel.centralfaculdade.domain.Aluno;
-import com.felipegabriel.centralfaculdade.domain.Curso;
 import com.felipegabriel.centralfaculdade.domain.Disciplina;
 import com.felipegabriel.centralfaculdade.domain.Sessao;
 import com.felipegabriel.centralfaculdade.domain.dto.NotaDTO;
@@ -43,11 +43,6 @@ public class NotasActivity extends AppCompatActivity {
         disciplinaService = new DisciplinaService(this);
         alunoDisciplinaNotaService = new AlunoDisciplinaNotaService(this);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
         init();
     }
 
@@ -77,6 +72,7 @@ public class NotasActivity extends AppCompatActivity {
 
         NotaAdapter adapter = new NotaAdapter(notasDTO);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     private Aluno getAluno() {

@@ -27,11 +27,6 @@ public class GradeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grade);
         setSupportActionBar(findViewById(R.id.toolbar_grade));
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
         gradeCurricularService = new GradeCurricularService(this);
 
         init();

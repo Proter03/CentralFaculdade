@@ -310,8 +310,12 @@ public class MainActivity extends AppCompatActivity {
         this.openActivity(GradeActivity.class);
     }
 
-    public void onClickHorarios(View view) {
-        this.openActivity(HorariosActivity.class);
+    public void onClickHorariosAula(View view) {
+        this.openActivity(HorariosAulaActivity.class);
+    }
+
+    public void onClickHorarioProvas(View view) {
+        this.openActivity(HorarioProvasActivity.class);
     }
 
     private <T> void openActivity(Class<T> aClass) {

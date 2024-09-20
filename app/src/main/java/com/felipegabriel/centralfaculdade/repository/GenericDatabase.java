@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -100,6 +101,8 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
                             values.put(fieldName, (Double) fieldValue);
                         } else if (fieldValue instanceof LocalTime) {
                             values.put(fieldName, ((LocalTime) fieldValue).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                        } else if (fieldValue instanceof LocalDateTime) {
+                            values.put(fieldName, ((LocalDateTime) fieldValue).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                         }
                     }
                 } catch (IllegalAccessException e) {
@@ -192,6 +195,8 @@ public class GenericDatabase<T> extends SQLiteOpenHelper {
                                 field.set(object, cursor.getDouble(columnIndex));
                             } else if (field.getType() == LocalTime.class) {
                                 field.set(object, LocalTime.parse(cursor.getString(columnIndex)));
+                            } else if (field.getType() == LocalDateTime.class) {
+                                field.set(object, LocalDateTime.parse(cursor.getString(columnIndex), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                             }
                         }
                     }

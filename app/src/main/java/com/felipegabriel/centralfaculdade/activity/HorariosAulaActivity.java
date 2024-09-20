@@ -15,7 +15,7 @@ import com.felipegabriel.centralfaculdade.service.HorarioAulaService;
 
 import java.util.List;
 
-public class HorariosActivity extends AppCompatActivity {
+public class HorariosAulaActivity extends AppCompatActivity {
 
     HorarioAulaService horarioAulaService;
 
@@ -24,13 +24,8 @@ public class HorariosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_horarios);
-        setSupportActionBar(findViewById(R.id.toolbar_horarios));
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        setContentView(R.layout.activity_horarios_aula);
+        setSupportActionBar(findViewById(R.id.toolbar_horariosAula));
 
         horarioAulaService = new HorarioAulaService(this);
 
